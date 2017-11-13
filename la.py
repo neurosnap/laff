@@ -48,7 +48,6 @@ if __name__ == '__main__':
 
     assert scaled_addition(3, (2, 4, -1, 0), (1, 0, 1, 0)) == [7, 12, -2, 0]
 
-    assert transpose_vectors((2, 5, -6, 1), (1, 1, 1, 1, 1, 1)) == 2
     assert transpose_vectors((2, 5, -6, 1), (1, 1, 1, 1)) == 2
     vec_1 = add_vectors((2, 5, -6, 1), (1, 2, 3, 4))
     assert transpose_vectors((1, 1, 1, 1), vec_1) == 12
