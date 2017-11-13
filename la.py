@@ -28,14 +28,14 @@ def scaled_addition(scale, vec_x, vec_y):
     scaled_x = scale_vector(scale, vec_x)
     return add_vectors(scaled_x, vec_y)
 
-def transpose_vectors(vec_x, vec_y):
+def dot_product(vec_x, vec_y):
     res = 0
     for i, val in enumerate(vec_x):
         res = res + (val * vec_y[i])
     return res
 
 def euclidean_length(vector):
-    dot = transpose_vectors(vector, vector)
+    dot = dot_product(vector, vector)
     return math.sqrt(dot)
 
 if __name__ == '__main__':
@@ -48,9 +48,9 @@ if __name__ == '__main__':
 
     assert scaled_addition(3, (2, 4, -1, 0), (1, 0, 1, 0)) == [7, 12, -2, 0]
 
-    assert transpose_vectors((2, 5, -6, 1), (1, 1, 1, 1)) == 2
+    assert dot_product((2, 5, -6, 1), (1, 1, 1, 1)) == 2
     vec_1 = add_vectors((2, 5, -6, 1), (1, 2, 3, 4))
-    assert transpose_vectors((1, 1, 1, 1), vec_1) == 12
+    assert dot_product((1, 1, 1, 1), vec_1) == 12
 
     assert euclidean_length((1, -2, 2)) == 3.0
     print('All tests pass :)')
