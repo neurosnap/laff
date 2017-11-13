@@ -42,32 +42,16 @@ if __name__ == '__main__':
     assert add_vectors((4, -3), (1, 5)) == [5, 2]
     assert add_vectors([-1, 2], [-3, -2]) == [-4, 0]
 
-    print('sum of example vector: ', add_vectors((4, -3), (1, 5)))
-    print('sum of vectors: ', add_vectors([-1, 2], [-3, -2]))
-    print('sum of vectors: ', add_vectors((-3, -2), (-1, 2)))
-    print('sum of vectors: ', add_vectors(add_vectors((-1, 2), (-3, -2)), (1, 2)))
-
     assert scale_vector(3, (-1, 2)) == [-3, 6]
     assert scale_vector(-0.5, (4, -2)) == [-2.0, 1.0]
     assert scale_vector(0.5, (4, -2)) == [2.0, -1.0]
 
-    print('scale vector: ', scale_vector(3, (-1, 2)))
-    print('scale vector: ', scale_vector(2, (4, -2)))
-    print('scale vector: ', scale_vector(0.5, (4, -2)))
-    print('scale vector: ', scale_vector(-0.5, (4, -2)))
-
     assert scaled_addition(3, (2, 4, -1, 0), (1, 0, 1, 0)) == [7, 12, -2, 0]
-    print('scaled addition: ', scaled_addition(3, (2, 4, -1, 0), (1, 0, 1, 0)))
 
     assert transpose_vectors((2, 5, -6, 1), (1, 1, 1, 1, 1, 1)) == 2
     assert transpose_vectors((2, 5, -6, 1), (1, 1, 1, 1)) == 2
     vec_1 = add_vectors((2, 5, -6, 1), (1, 2, 3, 4))
     assert transpose_vectors((1, 1, 1, 1), vec_1) == 12
 
-    print('transpose: ', transpose_vectors((2, 5, -6, 1), (1, 1, 1, 1, 1, 1)))
-    print('transpose: ', transpose_vectors((2, 5, -6, 1), (1, 1, 1, 1)))
-    print('transpose: ', transpose_vectors((1, 1, 1, 1), vec_1))
-
     assert euclidean_length((1, -2, 2)) == 3.0
-
-    print('euclidean length: ', euclidean_length((1, -2, 2)))
+    print('All tests pass :)')
