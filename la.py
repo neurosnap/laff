@@ -56,7 +56,7 @@ if __name__ == '__main__':
     print('scale vector: ', scale_vector(0.5, (4, -2)))
     print('scale vector: ', scale_vector(-0.5, (4, -2)))
 
-    assert scaled_addition((2, 4, -1, 0), (1, 0, 1, 0), 3) == [7, 12, -2, 0]
+    assert scaled_addition(3, (2, 4, -1, 0), (1, 0, 1, 0)) == [7, 12, -2, 0]
     print('scaled addition: ', scaled_addition(3, (2, 4, -1, 0), (1, 0, 1, 0)))
 
     assert transpose_vectors((2, 5, -6, 1), (1, 1, 1, 1, 1, 1)) == 2
