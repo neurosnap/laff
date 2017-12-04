@@ -31,7 +31,7 @@ def scaled_addition(scale, vec_x, vec_y):
 def dot_product(vec_x, vec_y):
     res = 0
     for i, val in enumerate(vec_x):
-        res = res + (val * vec_y[i])
+        res = round(res + val * vec_y[i], 2)
     return res
 
 def euclidean_length(vector):
@@ -39,26 +39,35 @@ def euclidean_length(vector):
     return math.sqrt(dot)
 
 def set_matrix(matrix, value=0):
-    columns = len(matrix)
-    rows = len(matrix[0])
-    return [[value] * rows for _ in range(columns)]
+    rows = len(matrix)
+    columns = len(matrix[0])
+    return [[value] * columns for _ in range(rows)]
 
 zero_matrix = partial(set_matrix, value=0)
 one_matrix = partial(set_matrix, value=1)
 
 def set_to_diagonal(matrix, value=None):
     new_matrix = []
-    for i, col in enumerate(matrix):
-        new_col = []
-        for j, row in enumerate(col):
+    for i, row in enumerate(matrix):
+        new_row = []
+        for j, col in enumerate(row):
             val = 0
             if i == j:
-                val = value if value else row
-            new_col.append(val)
-        new_matrix.append(new_col)
+                val = value if value else col
+            new_row.append(val)
+        new_matrix.append(new_row)
     return new_matrix
 
 set_to_identity = partial(set_to_diagonal, value=1)
+
+def dot_matrix_vector(matrix, vector):
+    return [dot_product(row, vector) for row in matrix]
+
+def predict_weather(today, probabilities, days):
+    forecast = today
+    for _ in range(days - 1):
+        forecast = dot_matrix_vector(probabilities, forecast)
+    return forecast
 
 if __name__ == '__main__':
     assert add_vectors((4, -3), (1, 5)) == [5, 2]
@@ -91,5 +100,18 @@ if __name__ == '__main__':
     actual_matrix = [[2, 3, 4], [5, 6, 7], [8, 9, 10]]
     expected_matrix = [[2, 0, 0], [0, 6, 0], [0, 0, 10]]
     assert set_to_diagonal(actual_matrix) == expected_matrix
+
+    matrix = [[2, 3, 4], [5, 6, 7], [8, 9, 10]]
+    vector = [3, 5, 2]
+    expected_vector = [29, 59, 89]
+    assert dot_matrix_vector(matrix, vector) == expected_vector
+
+    forecast = [[0.4, 0.3, 0.1], [0.4, 0.3, 0.6], [0.2, 0.4, 0.3]]
+    weather = dot_matrix_vector(forecast, [0.4, 0.4, 0.2])
+    assert weather == [0.3, 0.4, 0.3]
+
+    print(predict_weather([0.4, 0.4, 0.2], forecast, 2))
+    print(predict_weather([0.3, 0.3, 0.4], forecast, 2))
+    print(predict_weather([0.1, 0.6, 0.3], forecast, 2))
 
     print('All tests pass :)')
