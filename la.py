@@ -69,6 +69,21 @@ def predict_weather(today, probabilities, days):
         forecast = dot_matrix_vector(probabilities, forecast)
     return forecast
 
+def matrix_mult(matrix_one, matrix_two):
+    res = []
+    col_matrix = row_to_col_matrix(matrix_two)
+    for col in col_matrix:
+        res.append(dot_matrix_vector(matrix_one, col))
+    return row_to_col_matrix(res)
+
+def row_to_col_matrix(matrix):
+    new_matrix = [[] for _ in matrix[0]]
+    for row in matrix:
+        for i, col in enumerate(row):
+            new_matrix[i].append(col)
+    return new_matrix
+
+
 if __name__ == '__main__':
     assert add_vectors((4, -3), (1, 5)) == [5, 2]
     assert add_vectors([-1, 2], [-3, -2]) == [-4, 0]
@@ -110,8 +125,63 @@ if __name__ == '__main__':
     weather = dot_matrix_vector(forecast, [0.4, 0.4, 0.2])
     assert weather == [0.3, 0.4, 0.3]
 
-    print(predict_weather([0.4, 0.4, 0.2], forecast, 2))
-    print(predict_weather([0.3, 0.3, 0.4], forecast, 2))
-    print(predict_weather([0.1, 0.6, 0.3], forecast, 2))
+    # print(predict_weather([0.4, 0.4, 0.2], forecast, 2))
+    # print(predict_weather([0.3, 0.3, 0.4], forecast, 2))
+    # print(predict_weather([0.1, 0.6, 0.3], forecast, 2))
+
+    actual_matrix = row_to_col_matrix([
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+        [10, 11, 12],
+    ])
+    expected_matrix = [
+        [1, 4, 7, 10],
+        [2, 5, 8, 11],
+        [3, 6, 9, 12],
+    ]
+    assert actual_matrix == expected_matrix
+
+    actual_matrix = matrix_mult([
+        [0.4, 0.3, 0.1],
+        [0.4, 0.3, 0.6],
+        [0.2, 0.4, 0.3],
+    ], [
+        [0.4, 0.3, 0.1],
+        [0.4, 0.3, 0.6],
+        [0.2, 0.4, 0.3],
+    ])
+    expected_matrix = [
+        [0.3, 0.25, 0.25],
+        [0.4, 0.45, 0.4],
+        [0.3, 0.3, 0.35],
+    ]
+    assert actual_matrix == expected_matrix
+
+    matrix_a = [
+        [2, 0, 1],
+        [-1, 1, 0],
+        [1, 3, 1],
+        [-1, 1, 1],
+    ]
+    matrix_b = [
+        [2, 1, 2, 1],
+        [0, 1, 0, 1],
+        [1, 0, 1, 0],
+    ]
+    actual_matrix = matrix_mult(matrix_a, matrix_b)
+    assert actual_matrix == [
+        [5.0, 2.0, 5.0, 2.0],
+        [-2.0, 0, -2.0, 0],
+        [3.0, 4.0, 3.0, 4.0],
+        [-1.0, 0, -1.0, 0.0],
+    ]
+
+    actual_matrix = matrix_mult(matrix_b, matrix_a)
+    assert actual_matrix == [
+        [4, 8, 5],
+        [-2, 2, 1],
+        [3, 3, 2]
+    ]
 
     print('All tests pass :)')
